@@ -10,11 +10,13 @@ passport.use(
       clientID: process.env.LINKEDIN_CLIENT_ID,
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
       callbackURL: process.env.LINKEDIN_CALLBACK_URL,
-      scope: ["r_liteprofile", "r_emailaddress"],
+      scope: ["openid", "profile", "email"],
       state: true,
+      passReqToCallback: true,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
+        console.log("LinkedIn Profile:", profile);
         const user = {
           linkedinId: profile.id,
           firstName: profile.name.givenName,

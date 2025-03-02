@@ -4,19 +4,20 @@ import { linkedinAuthSuccess, logout } from "../controllers/authController.js";
 
 const router = express.Router();
 
-router.get(
-  "/linkedin",
-  passport.authenticate("linkedin", { state: "SOME STATE" })
-);
+router.get("/linkedin", passport.authenticate("linkedin", { state: true }));
 
 router.get(
   "/linkedin/callback",
   passport.authenticate("linkedin", {
     failureRedirect: "/login",
-    session: false,
+    // session: false,
   }),
   linkedinAuthSuccess
 );
+
+router.get("/login", (req, res) => {
+  res.redirect("http://localhost:5173/login");
+});
 
 router.post("/logout", logout);
 
